@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Hero from "@/components/Hero";
 import Image from "next/image";
 
 export default async function Home() {
@@ -11,7 +12,6 @@ export default async function Home() {
   });
 
   const data = await res.json();
-  console.log(data);
 
   const bannerMovies = data.results.slice(-5);
   return (
@@ -25,7 +25,14 @@ export default async function Home() {
           className="absolute top-0 left-0 object-cover object-center h-full w-full -z-50"
         />
         <div className="absolute inset-0 bg-black/40 -z-40"></div>
-        <Header />
+        <div className="px-[98px] flex-col gap-[78px] ">
+          <Header />
+          <Hero
+            title={bannerMovies[0].original_title}
+            overview={bannerMovies[0].overview}
+            rating={bannerMovies[0].vote_average}
+          />
+        </div>
       </div>
     </main>
   );
