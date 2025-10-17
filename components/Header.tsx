@@ -10,7 +10,7 @@ const Header = () => {
           width={50}
           height={50}
         />
-        <h1 className="text-2xl font-bold leading-6 ">Flickerly</h1>
+        <h1 className="text-2xl font-bold leading-6 text-white">Flickerly</h1>
       </div>
       <form className="form w-[525px] h-[36px] relative">
         <input
@@ -30,7 +30,7 @@ const Header = () => {
       </form>
       <div>
         <button className="cursor-pointer w-[114px] h-[36px] flex justify-between items-center">
-          <span className="text-[16px] font-bold">Sign in</span>
+          <span className="text-[16px] font-bold text-white">Sign in</span>
           <Image
             src="/assets/Menu.png"
             alt="menu-icon"

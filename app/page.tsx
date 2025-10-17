@@ -1,4 +1,5 @@
-import BannerSection from "@/components/BannerSection";
+import BannerSection from "@/components/homePageSections/BannerSection";
+import MovieCategoriesSection from "@/components/homePageSections/MovieCategoriesSection";
 
 export default async function Home() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/day", {
@@ -15,6 +16,7 @@ export default async function Home() {
   return (
     <main>
       <BannerSection bannerMovies={bannerMovies} />
+      <MovieCategoriesSection trendingMovies={data.results} />
     </main>
   );
 }
