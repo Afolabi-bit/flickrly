@@ -13,7 +13,6 @@ const UpcomingMoviesList = async () => {
   );
 
   const data = await res.json();
-  console.log(data);
   return (
     <div>
       <h2 className="text-4xl font-bold mb-5">Upcoming </h2>

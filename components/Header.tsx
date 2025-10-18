@@ -1,3 +1,4 @@
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
 const Header = () => {
   return (
@@ -29,7 +30,10 @@ const Header = () => {
         </button>
       </form>
       <div>
-        <button className="cursor-pointer w-[114px] h-[36px] flex justify-between items-center">
+        <LoginLink className="bg-[#02AAB0] w-[114px] h-[36px] text-white ">
+          Log In
+        </LoginLink>
+        {/* <button className="cursor-pointer w-[114px] h-[36px] flex justify-between items-center">
           <span className="text-[16px] font-bold text-white">Sign in</span>
           <Image
             src="/assets/Menu.png"
@@ -38,7 +42,7 @@ const Header = () => {
             height={36}
             priority
           />
-        </button>
+        </button> */}
       </div>
     </header>
   );

@@ -10,7 +10,6 @@ const PopularMoviesList = async () => {
   });
 
   const data = await res.json();
-  console.log(data);
   return (
     <div>
       <h2 className="text-4xl font-bold mb-5">Popular </h2>

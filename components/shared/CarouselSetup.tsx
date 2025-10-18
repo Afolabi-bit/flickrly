@@ -32,13 +32,16 @@ const CarouselSetup: React.FC<CarouselSetupProps> = ({ list }) => {
               href="/"
               className="bg-white block max-w-[250px] h-[490px] rounded-sm"
             >
-              <Image
-                width={250}
-                height={370}
-                className="object-cover w-[250px] h-[370px] rounded-t-sm"
-                src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
-                alt={item.title}
-              />
+              <div className="relative w-[250px] h-[370px]">
+                <Image
+                  fill
+                  src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
+                  alt={item.title}
+                  priority
+                  sizes="250px"
+                  className="object-cover rounded-t-sm"
+                />
+              </div>
               <div className="px-2.5 pt-0.5 pb-2.5">
                 <p>
                   <span className="text-[12px] font-bold mr-2">

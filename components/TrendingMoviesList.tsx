@@ -1,20 +1,19 @@
 import CarouselSetup from "./shared/CarouselSetup";
 
-interface TrendingMoviesProps {
-  list: {
-    id: number;
-    original_title: string;
-    poster_path: string;
-    vote_average: number;
-    release_date: string;
-  }[];
-}
+const TrendingMovies = async () => {
+  const res = await fetch("https://api.themoviedb.org/3/trending/movie/day", {
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`,
+    },
+    cache: "no-store",
+  });
 
-const TrendingMovies = ({ list }: TrendingMoviesProps) => {
+  const data = await res.json();
   return (
     <div>
       <h2 className="text-4xl font-bold mb-5">Trending Today</h2>
-      <CarouselSetup list={list} />
+      <CarouselSetup list={data.results} />
     </div>
   );
 };

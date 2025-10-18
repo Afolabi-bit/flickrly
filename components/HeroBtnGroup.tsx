@@ -10,7 +10,7 @@ const HeroBtnGroup: React.FC<HeroBtnGroupProps> = ({
   setMovieSelector,
 }) => {
   return (
-    <aside className="absolute top-[50%] translate-[-50%] right-6 w-9 h-[110px] flex flex-col gap-2.5 items-end">
+    <aside className="absolute top-[50%] translate-[-50%] right-6 w-9 h-[110px] flex flex-col gap-2.5 items-end z-50 ">
       {[1, 2, 3, 4, 5].map((num, idx) => (
         <button
           key={num}
