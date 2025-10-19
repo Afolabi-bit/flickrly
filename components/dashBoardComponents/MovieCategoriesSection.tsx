@@ -6,10 +6,7 @@ import UpcomingMoviesList from "./UpcomingMoviesList";
 
 export default function MovieCategoriesSection() {
   return (
-    <section
-      style={{ userSelect: "none" }}
-      className="pt-[70px] pb-[250px] flex flex-col gap-[70px] "
-    >
+    <section className="pt-[70px] pb-[250px] flex flex-col gap-[80px] ">
       <TrendingMovies />
       <NowPlayingList />
       <PopularMoviesList />

@@ -9,7 +9,7 @@ export default async function DashboardLayout({
   const user = await getSessionUser();
 
   return (
-    <div className="min-h-screen flex flex-col px-[98px] bg-[#eeeeee07]">
+    <div className="min-h-screen flex flex-col px-[98px] bg-[#eee]">
       <DashboardHeader user={user} />
       <main className="flex-1 py-8">{children}</main>
     </div>

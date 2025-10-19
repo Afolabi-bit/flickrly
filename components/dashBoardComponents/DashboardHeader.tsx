@@ -31,11 +31,14 @@ const DashboardHeader = ({ user }: DashboardHeaderProps) => {
         <input
           type="text"
           placeholder="What do you want to watch?"
-          className="w-full h-full px-[10px] py-[6px] outline-black rounded-[6px] placeholder:text-black border border-black"
+          className="w-full h-full px-[10px] py-[6px] outline-black rounded-[6px] placeholder:text-black border border-black border-2"
         />
-        <button type="submit" className="absolute top-[6px] right-[10px]">
+        <button
+          type="submit"
+          className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+        >
           <Image
-            src="/assets/Search.png"
+            src="/assets/blackSearch.png"
             alt="search icon"
             width={16}
             height={16}
@@ -46,7 +49,6 @@ const DashboardHeader = ({ user }: DashboardHeaderProps) => {
       <div>
         {user ? (
           <Link href={"/profile"} className="flex gap-2 items-center">
-            <span className="text-white font-semibold">{user.given_name}</span>
             <Image
               src={user.picture}
               alt="user"

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CarouselSetup from "../shared/CarouselSetup";
 
 const NowPlayingList = async () => {
@@ -12,7 +13,16 @@ const NowPlayingList = async () => {
   const data = await res.json();
   return (
     <div>
-      <h2 className="text-4xl font-bold mb-5">Now Playing</h2>
+      <div className="flex gap-3.5 items-center mb-4">
+        <h2 className="text-4xl font-bold mb-5">Now Playing </h2>
+        <Image
+          src={"/assets/video-camera.png"}
+          alt="trending"
+          className="object-cover translate-y-[-10px]"
+          height={50}
+          width={50}
+        />
+      </div>
       <CarouselSetup list={data.results} />
     </div>
   );

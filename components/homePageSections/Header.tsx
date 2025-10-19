@@ -30,7 +30,10 @@ export default function Header({ user }: HeaderClientProps) {
           placeholder="What do you want to watch?"
           className="w-full h-full px-[10px] py-[6px] outline-white rounded-[6px] placeholder:text-white border border-white"
         />
-        <button type="submit" className="absolute top-[6px] right-[10px]">
+        <button
+          type="submit"
+          className="absolute top-[50%] translate-y-[-50%] right-[10px]"
+        >
           <Image
             src="/assets/Search.png"
             alt="search icon"

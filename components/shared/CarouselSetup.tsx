@@ -24,22 +24,26 @@ interface CarouselSetupProps {
 
 const CarouselSetup: React.FC<CarouselSetupProps> = ({ list }) => {
   return (
-    <Carousel>
-      <CarouselContent className="flex flex-nowrap gap-2.5">
+    <Carousel className="bg-[#eee] p-9 shadow-2xl rounded-xl h-fit">
+      <CarouselContent className="flex flex-nowrap">
         {list.map((item) => (
-          <CarouselItem key={item.id} className="basis-[250px] flex-shrink-0">
+          <CarouselItem
+            key={item.id}
+            className="basis-[250px] flex-shrink-0  h- overflow-y-visible pb-3 "
+          >
             <Link
+              key={item.id}
               href="/"
-              className="bg-white block max-w-[250px] h-[490px] rounded-sm"
+              style={{ userSelect: "none" }}
+              className="group bg-white block  max-w-[250px] h-[490px] rounded-sm "
             >
-              <div className="relative w-[250px] h-[370px]">
+              <div className="overflow-hidden rounded-t-sm">
                 <Image
-                  fill
+                  width={250}
+                  height={370}
+                  className="object-cover w-[250px] h-[370px] rounded-t-sm transform transition-transform duration-500 group-hover:scale-105"
                   src={`https://image.tmdb.org/t/p/original${item.poster_path}`}
                   alt={item.title}
-                  priority
-                  sizes="250px"
-                  className="object-cover rounded-t-sm"
                 />
               </div>
               <div className="px-2.5 pt-0.5 pb-2.5">
@@ -47,7 +51,7 @@ const CarouselSetup: React.FC<CarouselSetupProps> = ({ list }) => {
                   <span className="text-[12px] font-bold mr-2">
                     Release date:
                   </span>
-                  <span className="text-[12px] font-bold text-[#9CA3AF] ">
+                  <span className="text-[12px] font-bold text-[#9CA3AF]">
                     {new Date(item.release_date).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "long",
