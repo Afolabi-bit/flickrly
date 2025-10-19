@@ -19,7 +19,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${open_Sans.variable}  antialiased`}>{children}</body>
+      <body className={`${open_Sans.variable} bg-[#eeeeee07] antialiased`}>
+        {children}
+      </body>
     </html>
   );
 }

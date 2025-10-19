@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { BadgeCheck } from "lucide-react";
-import Rating from "./shared/Rating";
+import Rating from "../shared/Rating";
 
 interface HeroProps {
   title: string;

@@ -2,10 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
-import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import HeroBtnGroup from "@/components/HeroBtnGroup";
+import { motion } from "framer-motion";
+import Hero from "@/components/homePageSections/Hero";
+import HeroBtnGroup from "@/components/homePageSections/HeroBtnGroup";
+import Header from "./Header";
 
 export interface Movie {
   id: number;
@@ -18,9 +18,16 @@ export interface Movie {
 
 interface BannerSectionProps {
   bannerMovies: Movie[];
+  user: {
+    given_name?: string | null;
+    email?: string | null;
+  } | null;
 }
 
-export default function BannerSection({ bannerMovies }: BannerSectionProps) {
+export default function BannerSection({
+  bannerMovies,
+  user,
+}: BannerSectionProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isPaused, setIsPaused] = useState<boolean>(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -54,50 +61,49 @@ export default function BannerSection({ bannerMovies }: BannerSectionProps) {
     resumeTimeoutRef.current = setTimeout(() => setIsPaused(false), 8000);
   };
 
-  return (
-    <div className="relative w-full h-[600px] overflow-hidden">
-      {/* Background crossfade */}
-      <div className="absolute top-0 left-0 w-full h-full -z-50">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={selectedMovie.id}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{
-              duration: 1.2,
-              ease: [0.45, 0, 0.55, 1],
-            }}
-            className="absolute top-0 left-0 w-full h-full"
-          >
-            <Image
-              src={`https://image.tmdb.org/t/p/original${selectedMovie.poster_path}`}
-              alt={selectedMovie.title}
-              fill
-              priority
-              sizes="100vw"
-              className="object-cover object-center brightness-75"
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
+  if (!user)
+    return (
+      <div className="relative w-full h-[600px] overflow-hidden">
+        {/* Background crossfade - render all images, control opacity */}
+        <div className="absolute top-0 left-0 w-full h-full -z-50">
+          {bannerMovies.map((movie, index) => (
+            <motion.div
+              key={movie.id}
+              initial={false}
+              animate={{
+                opacity: index === selectedIndex ? 1 : 0,
+              }}
+              transition={{
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+              className="absolute top-0 left-0 w-full h-full"
+            >
+              <Image
+                src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                alt={movie.title}
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className="object-cover object-center brightness-75"
+              />
+            </motion.div>
+          ))}
+        </div>
 
-      {/* Gradient overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent -z-40" />
+        {/* Gradient overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent -z-40" />
 
-      {/* Foreground content */}
-      <div className="relative z-10 px-[98px] flex flex-col">
-        <Header />
+        {/* Foreground content */}
+        <div className="relative z-10 px-[98px] flex flex-col">
+          <Header user={user} />
 
-        <AnimatePresence mode="wait">
           <motion.div
             key={`text-${selectedMovie.id}`}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
             transition={{
-              duration: 1,
-              delay: 0.3, // ⏱ 300 ms delay after image fade
+              duration: 0.6,
               ease: "easeOut",
             }}
           >
@@ -107,14 +113,13 @@ export default function BannerSection({ bannerMovies }: BannerSectionProps) {
               rating={selectedMovie.vote_average}
             />
           </motion.div>
-        </AnimatePresence>
-      </div>
+        </div>
 
-      {/* Manual controls (dots/arrows) */}
-      <HeroBtnGroup
-        movieSelector={selectedIndex}
-        setMovieSelector={handleManualSelect}
-      />
-    </div>
-  );
+        {/* Manual controls (dots/arrows) */}
+        <HeroBtnGroup
+          movieSelector={selectedIndex}
+          setMovieSelector={handleManualSelect}
+        />
+      </div>
+    );
 }

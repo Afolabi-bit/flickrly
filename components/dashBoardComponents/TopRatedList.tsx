@@ -1,4 +1,4 @@
-import CarouselSetup from "./shared/CarouselSetup";
+import CarouselSetup from "../shared/CarouselSetup";
 
 const TopRatedList = async () => {
   const res = await fetch("https://api.themoviedb.org/3/movie/top_rated", {

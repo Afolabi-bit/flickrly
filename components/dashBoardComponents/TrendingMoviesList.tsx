@@ -1,7 +1,7 @@
-import CarouselSetup from "./shared/CarouselSetup";
+import CarouselSetup from "../shared/CarouselSetup";
 
-const NowPlayingList = async () => {
-  const res = await fetch("https://api.themoviedb.org/3/movie/now_playing", {
+const TrendingMovies = async () => {
+  const res = await fetch("https://api.themoviedb.org/3/trending/movie/day", {
     headers: {
       accept: "application/json",
       Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`,
@@ -12,10 +12,10 @@ const NowPlayingList = async () => {
   const data = await res.json();
   return (
     <div>
-      <h2 className="text-4xl font-bold mb-5">Now Playing</h2>
+      <h2 className="text-4xl font-bold mb-5">Trending Today</h2>
       <CarouselSetup list={data.results} />
     </div>
   );
 };
 
-export default NowPlayingList;
+export default TrendingMovies;

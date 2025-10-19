@@ -1,4 +1,4 @@
-import CarouselSetup from "./shared/CarouselSetup";
+import CarouselSetup from "../shared/CarouselSetup";
 
 const UpcomingMoviesList = async () => {
   const res = await fetch(

@@ -1,24 +1,43 @@
 import MovieCategoriesSection from "@/components/dashBoardComponents/MovieCategoriesSection";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
-import Link from "next/link";
+import getSessionUser from "@/lib/auth";
+import { CloudSun, Moon, Sun, SunMoon } from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
 
 const page = async () => {
-  const { getUser } = getKindeServerSession();
-  const user = await getUser();
+  const user = await getSessionUser();
 
   if (!user?.given_name) redirect("/api/auth/login");
-  console.log(user);
+
+  const hours = new Date().getHours();
+  const greeting =
+    hours < 12
+      ? "Good morning"
+      : hours < 18
+      ? "Good afternoon"
+      : "Good evening";
 
   return (
     <main>
-      <Link
-        href="/api/auth/logout"
-        className="inline-block mt-4 px-4 py-2 bg-red-500 text-white rounded"
-      >
-        Logout
-      </Link>
+      <div>
+        <h1 className="text-[40px] font-bold flex items-baseline gap-5">
+          <span>
+            {greeting}, {user.given_name}{" "}
+          </span>
+          <span className="translate-y-1">
+            {" "}
+            {hours < 12 ? (
+              <CloudSun className="text-[#6bb6f3] size-14" />
+            ) : hours < 16 ? (
+              <Sun className="text-red-500 size-14" />
+            ) : hours < 19 ? (
+              <SunMoon className="text-orange-500 size-14" />
+            ) : (
+              <Moon className="text-[#58748b] size-14" />
+            )}
+          </span>
+        </h1>
+      </div>
       <MovieCategoriesSection />
     </main>
   );

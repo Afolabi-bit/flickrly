@@ -2,8 +2,17 @@ import BannerSection from "@/components/homePageSections/BannerSection";
 import Image from "next/image";
 import Link from "next/link";
 import Rating from "@/components/shared/Rating";
+import getSessionUser from "@/lib/auth";
 
 export default async function Home() {
+  interface Movie {
+    id: number;
+    title: string;
+    poster_path: string;
+    release_date: string;
+    vote_average: number;
+  }
+
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/day", {
     headers: {
       accept: "application/json",
@@ -15,10 +24,12 @@ export default async function Home() {
   const data = await res.json();
   const bannerMovies = data.results.slice(-5);
 
+  const user = await getSessionUser();
+
   return (
     <main>
-      <BannerSection bannerMovies={bannerMovies} />
-      <div className=" px-[98px] pt-[70px] bg-[#eee]">
+      <BannerSection bannerMovies={bannerMovies} user={user} />
+      <div className=" px-[98px] pt-[70px] ">
         <div className="flex justify-between mb-[20px]">
           <h2 className="text-4xl font-bold mb-5">Featured Movies</h2>
           <Link href={"/dashboard"}>See more</Link>
