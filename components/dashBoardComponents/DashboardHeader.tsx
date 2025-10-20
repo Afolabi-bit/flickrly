@@ -31,7 +31,7 @@ const DashboardHeader = ({ user }: DashboardHeaderProps) => {
         <input
           type="text"
           placeholder="What do you want to watch?"
-          className="w-full h-full px-[10px] py-[6px] outline-black rounded-[6px] placeholder:text-black border border-black border-2"
+          className="w-full h-full px-[10px] py-[6px] outline-black rounded-[6px] placeholder:text-black  border-black border-2"
         />
         <button
           type="submit"

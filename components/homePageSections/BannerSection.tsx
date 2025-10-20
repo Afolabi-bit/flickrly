@@ -110,6 +110,7 @@ export default function BannerSection({
             title={selectedMovie.original_title}
             overview={selectedMovie.overview}
             rating={selectedMovie.vote_average}
+            id={selectedMovie.id}
           />
         </motion.div>
       </div>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/components/shared/AuthProvider";
 
 const open_Sans = Open_Sans({
   variable: "--font-geist-sans",
@@ -18,10 +19,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${open_Sans.variable} bg-[#eeeeee07] antialiased`}>
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <html lang="en">
+        <body className={`${open_Sans.variable} bg-[#eeeeee07] antialiased`}>
+          {children}
+        </body>
+      </html>
+    </AuthProvider>
   );
 }

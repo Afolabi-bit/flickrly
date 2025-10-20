@@ -1,0 +1,87 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// prisma/schema.prisma
+model User {
+  id            String         @id @default(cuid())
+  name          String?
+  email         String?        @unique
+  image         String?
+  comments      Comment[]
+  ratings       Rating[]
+  favorites     Favorite[]
+  histories     History[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Movie {
+  id            String         @id // TMDB ID or your own UUID
+  title         String
+  overview      String?
+  posterUrl     String?
+  releaseDate   DateTime?
+  comments      Comment[]
+  ratings       Rating[]
+  favorites     Favorite[]
+  histories     History[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Comment {
+  id            String         @id @default(cuid())
+  content       String
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  movie         Movie          @relation(fields: [movieId], references: [id])
+  movieId       String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+}
+
+model Rating {
+  id            String         @id @default(cuid())
+  score         Int            // e.g. 1–10
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  movie         Movie          @relation(fields: [movieId], references: [id])
+  movieId       String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([userId, movieId]) // prevents duplicate ratings by same user
+}
+
+model Favorite {
+  id            String         @id @default(cuid())
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  movie         Movie          @relation(fields: [movieId], references: [id])
+  movieId       String
+  createdAt     DateTime       @default(now())
+
+  @@unique([userId, movieId]) // each user can favorite a movie only once
+}
+
+model History {
+  id            String         @id @default(cuid())
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String
+  movie         Movie          @relation(fields: [movieId], references: [id])
+  movieId       String
+  watchedAt     DateTime       @default(now())
+}

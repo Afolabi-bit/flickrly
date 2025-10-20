@@ -3,6 +3,7 @@
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
 import Link from "next/link";
+import { buttonVariants } from "../ui/button";
 
 interface HeaderClientProps {
   user: {
@@ -57,9 +58,7 @@ export default function Header({ user }: HeaderClientProps) {
             />
           </Link>
         ) : (
-          <LoginLink className="bg-[#B81D24] inline-flex rounded-sm justify-center items-center w-[114px] h-[36px] text-white">
-            <span className="text-sm font-semibold">Log In</span>
-          </LoginLink>
+          <LoginLink className={buttonVariants()}>Log In</LoginLink>
         )}
       </div>
     </header>

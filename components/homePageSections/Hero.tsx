@@ -6,10 +6,11 @@ import Rating from "../shared/Rating";
 interface HeroProps {
   title: string;
   overview: string;
-  rating: number; // 1-10
+  rating: number;
+  id: number;
 }
 
-const Hero = ({ title, overview, rating }: HeroProps) => {
+const Hero = ({ title, overview, rating, id }: HeroProps) => {
   return (
     <div className="w-[404px] h-[285px] mt-[78px]">
       <h1 className="text-[48px] leading-[56px] font-bold mb-4 text-white">
@@ -24,7 +25,7 @@ const Hero = ({ title, overview, rating }: HeroProps) => {
 
       <Link
         className="w-[169px] h-[36px] rounded-[6px] px-4 gap-2 flex items-center justify-between bg-[#BE123C]"
-        href="/"
+        href={`/movie/${id}`}
       >
         <Image
           src="/assets/playIcon.png"

@@ -3,16 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import Rating from "@/components/shared/Rating";
 import getSessionUser from "@/lib/auth";
+import { Button } from "@/components/ui/button";
 
 export default async function Home() {
-  interface Movie {
-    id: number;
-    title: string;
-    poster_path: string;
-    release_date: string;
-    vote_average: number;
-  }
-
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/day", {
     headers: {
       accept: "application/json",
@@ -32,13 +25,15 @@ export default async function Home() {
       <div className=" px-[98px] pt-[70px] ">
         <div className="flex justify-between mb-[20px]">
           <h2 className="text-4xl font-bold mb-5">Featured Movies</h2>
-          <Link href={"/dashboard"}>See more</Link>
+          <Button asChild variant="default" className="rounded-md">
+            <Link href="/dashboard">See more</Link>
+          </Button>
         </div>
         <div className="grid grid-cols-4 gap-5">
           {data.results.map((item) => (
             <Link
               key={item.id}
-              href="/"
+              href={`/movie/${item.id}`}
               className="group bg-white block max-w-[250px] h-[490px] rounded-sm shadow-md hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow duration-300"
             >
               <div className="overflow-hidden rounded-t-sm">

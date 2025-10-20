@@ -1,6 +1,5 @@
 import MovieCategoriesSection from "@/components/dashBoardComponents/MovieCategoriesSection";
 import getSessionUser from "@/lib/auth";
-import { CloudSun, Moon, Sun, SunMoon } from "lucide-react";
 import Image from "next/image";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -8,7 +7,7 @@ import React from "react";
 const page = async () => {
   const user = await getSessionUser();
 
-  if (!user?.given_name) redirect("/api/auth/login");
+  if (!user?.given_name) redirect("/api/auth/register");
 
   const hours = new Date().getHours();
   const greeting =

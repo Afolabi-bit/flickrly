@@ -45,7 +45,6 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* Your custom colors - corrected */
   --color-myBg: #0a0a0a;
   --color-myCardBg: #111827;
   --color-myPrimary: #e5e5e5;

@@ -33,7 +33,7 @@ const CarouselSetup: React.FC<CarouselSetupProps> = ({ list }) => {
           >
             <Link
               key={item.id}
-              href="/"
+              href={`/movie/${item.id}`}
               style={{ userSelect: "none" }}
               className="group bg-white block  max-w-[250px] h-[490px] rounded-sm "
             >
