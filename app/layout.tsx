@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/components/shared/AuthProvider";
+import getSessionUser from "@/lib/auth";
+import { syncUserToDatabase } from "./utils/actions";
 
-const open_Sans = Open_Sans({
-  variable: "--font-geist-sans",
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
   subsets: ["latin"],
 });
 
@@ -13,18 +15,27 @@ export const metadata: Metadata = {
   description: "Teasers and trailers",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const user = await getSessionUser();
+
+  if (user) {
+    await syncUserToDatabase(user);
+  }
+
   return (
-    <AuthProvider>
-      <html lang="en">
-        <body className={`${open_Sans.variable} bg-[#eeeeee07] antialiased`}>
+    <html lang="en">
+      <body className={`${openSans.variable} bg-[#eeeeee07] antialiased`}>
+        <AuthProvider>
           {children}
-        </body>
-      </html>
-    </AuthProvider>
+          <footer className="h-[150px] border border-red-700 relative">
+            Copyright fenigma
+          </footer>
+        </AuthProvider>
+      </body>
+    </html>
   );
 }

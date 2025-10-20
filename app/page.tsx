@@ -20,7 +20,7 @@ export default async function Home() {
   const user = await getSessionUser();
 
   return (
-    <main>
+    <main className="mb-[70px]">
       <BannerSection bannerMovies={bannerMovies} user={user} />
       <div className=" px-[98px] pt-[70px] ">
         <div className="flex justify-between mb-[20px]">
