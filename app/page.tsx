@@ -4,6 +4,7 @@ import Link from "next/link";
 import Rating from "@/components/shared/Rating";
 import getSessionUser from "@/lib/auth";
 import { Button } from "@/components/ui/button";
+import { TMDBMovie } from "./types/tmdb";
 
 export default async function Home() {
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/day", {
@@ -14,7 +15,7 @@ export default async function Home() {
     cache: "no-store",
   });
 
-  const data = await res.json();
+  const data: { results: TMDBMovie[] } = await res.json();
   const bannerMovies = data.results.slice(-5);
 
   const user = await getSessionUser();

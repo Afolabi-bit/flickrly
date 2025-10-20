@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/components/shared/AuthProvider";
 import getSessionUser from "@/lib/auth";
 import { syncUserToDatabase } from "./utils/actions";
+import type { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -20,7 +21,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getSessionUser();
+  const user = (await getSessionUser()) as KindeUser | null;
 
   if (user) {
     await syncUserToDatabase(user);

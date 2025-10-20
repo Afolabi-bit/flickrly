@@ -1,6 +1,7 @@
 import prisma from "./db";
+import type { KindeUser } from "@kinde-oss/kinde-auth-nextjs";
 
-export async function syncUserToDatabase(user: any) {
+export async function syncUserToDatabase(user: KindeUser) {
   try {
     const existingUser = await prisma.user.findUnique({
       where: { id: user.id },
