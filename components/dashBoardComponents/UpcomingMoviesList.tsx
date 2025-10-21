@@ -9,7 +9,7 @@ const UpcomingMoviesList = async () => {
         accept: "application/json",
         Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`,
       },
-      cache: "no-store",
+      next: { revalidate: 3600 },
     }
   );
 
@@ -21,9 +21,9 @@ const UpcomingMoviesList = async () => {
         <Image
           src={"/assets/upcoming.png"}
           alt="trending"
-          className="object-cover translate-y-[-10px] shadow-lg"
-          height={50}
-          width={50}
+          className="object-cover translate-y-[-7px]"
+          height={35}
+          width={35}
         />
       </div>
       <CarouselSetup list={data.results} />

@@ -12,7 +12,7 @@ export default async function Home() {
       accept: "application/json",
       Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`,
     },
-    cache: "no-store",
+    next: { revalidate: 3600 },
   });
 
   const data: { results: TMDBMovie[] } = await res.json();

@@ -7,7 +7,7 @@ const PopularMoviesList = async () => {
       accept: "application/json",
       Authorization: `Bearer ${process.env.TMDB_API_ACCESS_TOKEN}`,
     },
-    cache: "no-store",
+    next: { revalidate: 3600 },
   });
 
   const data = await res.json();
@@ -18,9 +18,9 @@ const PopularMoviesList = async () => {
         <Image
           src={"/assets/popular.png"}
           alt="popular"
-          className="object-cover translate-y-[-10px] "
-          height={50}
-          width={50}
+          className="object-cover translate-y-[-7px]"
+          height={35}
+          width={35}
         />
       </div>
       <CarouselSetup list={data.results} />

@@ -94,7 +94,7 @@ const Rating = ({ rating }: RatingProps) => {
 
   return (
     <span
-      className={`mb-4 text-[12px] leading-3 flex gap-1.5 items-center ${ratingColor}`}
+      className={` text-[12px] leading-3 flex gap-1.5 items-center ${ratingColor}`}
     >
       <BadgeCheck strokeWidth={3} size={20} />
       <span
