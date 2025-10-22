@@ -5,18 +5,20 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Hero from "@/components/homePageSections/Hero";
 import HeroBtnGroup from "@/components/homePageSections/HeroBtnGroup";
-import Header from "./Header";
+import Header from "../shared/Header";
 import { TMDBMovie } from "@/app/types/tmdb";
+
+interface User {
+  id?: string;
+  given_name?: string | null;
+  family_name?: string | null;
+  email?: string | null;
+  picture?: string | null;
+}
 
 interface BannerSectionProps {
   bannerMovies: TMDBMovie[];
-  user: {
-    id?: string;
-    given_name?: string | null;
-    family_name?: string | null;
-    email?: string | null;
-    picture?: string | null;
-  } | null;
+  user?: User | null;
 }
 
 export default function BannerSection({
@@ -30,22 +32,21 @@ export default function BannerSection({
 
   const selectedMovie = bannerMovies[selectedIndex];
 
-  // 🎥 Auto-rotation (Netflix pacing)
+  // 🎥 Auto-rotate slides every 6s
   useEffect(() => {
     if (!isPaused) {
       intervalRef.current = setInterval(() => {
         setSelectedIndex((prev) =>
           prev === bannerMovies.length - 1 ? 0 : prev + 1
         );
-      }, 6000); // ≈6 s per slide
+      }, 6000);
     }
-
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, [isPaused, bannerMovies.length]);
 
-  // 🧠 Pause when user interacts, resume after 8 s
+  // ⏸ Pause on manual selection, resume after 8s
   const handleManualSelect = (index: number) => {
     setSelectedIndex(index);
     setIsPaused(true);
@@ -58,19 +59,14 @@ export default function BannerSection({
 
   return (
     <div className="relative w-full h-[600px] overflow-hidden">
-      {/* Background crossfade - render all images, control opacity */}
+      {/* Background crossfade */}
       <div className="absolute top-0 left-0 w-full h-full -z-50">
         {bannerMovies.map((movie, index) => (
           <motion.div
             key={movie.id}
             initial={false}
-            animate={{
-              opacity: index === selectedIndex ? 1 : 0,
-            }}
-            transition={{
-              duration: 0.8,
-              ease: "easeInOut",
-            }}
+            animate={{ opacity: index === selectedIndex ? 1 : 0 }}
+            transition={{ duration: 0.8, ease: "easeInOut" }}
             className="absolute top-0 left-0 w-full h-full"
           >
             <Image
@@ -85,21 +81,18 @@ export default function BannerSection({
         ))}
       </div>
 
-      {/* Gradient overlay for readability */}
+      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent -z-40" />
 
       {/* Foreground content */}
       <div className="relative z-10 px-[98px] flex flex-col">
-        <Header user={user} />
+        <Header user={user ?? null} theme="light" />
 
         <motion.div
           key={`text-${selectedMovie.id}`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: 0.6,
-            ease: "easeOut",
-          }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
         >
           <Hero
             title={selectedMovie.title}
@@ -110,7 +103,7 @@ export default function BannerSection({
         </motion.div>
       </div>
 
-      {/* Manual controls (dots/arrows) */}
+      {/* Navigation controls */}
       <HeroBtnGroup
         movieSelector={selectedIndex}
         setMovieSelector={handleManualSelect}

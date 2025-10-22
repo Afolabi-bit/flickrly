@@ -1,4 +1,4 @@
-import DashboardHeader from "@/components/dashBoardComponents/DashboardHeader";
+import Header from "@/components/shared/Header";
 import getSessionUser from "@/lib/auth";
 
 export default async function DashboardLayout({
@@ -10,7 +10,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen flex flex-col px-[98px] bg-[#eee]">
-      <DashboardHeader user={user} />
+      <Header user={user} theme="dark" />
       <main className="flex-1 py-8">{children}</main>
     </div>
   );

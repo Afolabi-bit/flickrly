@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { TMDBMovie } from "./types/tmdb";
 
 export default async function Home() {
+  // Fetch trending movies
   const res = await fetch("https://api.themoviedb.org/3/trending/movie/day", {
     headers: {
       accept: "application/json",
@@ -15,21 +16,28 @@ export default async function Home() {
     next: { revalidate: 3600 },
   });
 
+  if (!res.ok) {
+    throw new Error("Failed to fetch movies from TMDB API");
+  }
+
   const data: { results: TMDBMovie[] } = await res.json();
   const bannerMovies = data.results.slice(-5);
 
+  // Get authenticated user (may return null)
   const user = await getSessionUser();
 
   return (
     <main className="mb-[70px]">
       <BannerSection bannerMovies={bannerMovies} user={user} />
-      <div className=" px-[98px] pt-[70px] ">
+
+      <div className="px-[98px] pt-[70px]">
         <div className="flex justify-between mb-[20px]">
           <h2 className="text-4xl font-bold mb-5">Featured Movies</h2>
           <Button asChild variant="default" className="rounded-md">
             <Link href="/dashboard">See more</Link>
           </Button>
         </div>
+
         <div className="grid grid-cols-4 gap-5">
           {data.results.map((item) => (
             <Link
@@ -46,6 +54,7 @@ export default async function Home() {
                   alt={item.title}
                 />
               </div>
+
               <div className="px-2.5 pt-0.5 pb-2.5">
                 <p>
                   <span className="text-[12px] font-bold mr-2">
@@ -59,9 +68,11 @@ export default async function Home() {
                     })}
                   </span>
                 </p>
+
                 <h2 className="text-[18px] font-bold text-[#111827] mb-1 truncate">
                   {item.title}
                 </h2>
+
                 <Rating rating={item.vote_average} />
               </div>
             </Link>
