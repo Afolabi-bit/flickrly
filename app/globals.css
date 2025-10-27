@@ -56,9 +56,9 @@
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {
   .form {
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.075);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    background-color: rgba(255, 255, 255, 0.219);
   }
 }
 

@@ -14,21 +14,23 @@ const UpcomingMoviesList = async () => {
   );
 
   const data = await res.json();
-  return (
-    <div>
-      <div className="flex gap-2.5 items-center mb-4">
-        <h2 className="text-4xl font-bold mb-5"> Upcoming </h2>
-        <Image
-          src={"/assets/upcoming.png"}
-          alt="trending"
-          className="object-cover translate-y-[-7px]"
-          height={35}
-          width={35}
-        />
+  if (data.results.length > 0) {
+    return (
+      <div>
+        <div className="flex gap-2.5 items-center mb-4">
+          <h2 className="text-4xl font-bold mb-5"> Upcoming </h2>
+          <Image
+            src={"/assets/upcoming.png"}
+            alt="trending"
+            className="object-cover translate-y-[-7px]"
+            height={35}
+            width={35}
+          />
+        </div>
+        <CarouselSetup list={data.results} />
       </div>
-      <CarouselSetup list={data.results} />
-    </div>
-  );
+    );
+  }
 };
 
 export default UpcomingMoviesList;

@@ -1,44 +1,12 @@
+import {
+  MovieDetailed,
+  MoviePageProps,
+  MovieVideo,
+} from "@/app/types/otherTypes";
 import Rating from "@/components/shared/Rating";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-
-interface MoviePageProps {
-  params: { id: string };
-}
-
-interface MovieVideo {
-  id: string;
-  key: string;
-  name: string;
-  site: string;
-  type: string;
-}
-
-interface Movie {
-  title: string;
-  release_date: string;
-  status: string;
-  runtime: number;
-  tagline: string;
-  overview: string;
-  budget: number;
-  revenue: number;
-  vote_average: number;
-  homepage: string;
-  production_companies: {
-    id: number;
-    logo_path: string | null;
-    name: string;
-    origin_country: string;
-  }[];
-  production_countries: { iso_3166_1: string; name: string }[];
-  name: string;
-  genres: { id: number; name: string }[];
-  videos: {
-    results?: MovieVideo[];
-  };
-}
 
 export default async function MoviePage({ params }: MoviePageProps) {
   const res = await fetch(
@@ -56,7 +24,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
     throw new Error("Failed to fetch movie data");
   }
 
-  const movie: Movie = await res.json();
+  const movie: MovieDetailed = await res.json();
 
   console.log(movie);
 
@@ -67,19 +35,6 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
   return (
     <main className="min-h-screen">
-      <header className="px-[98px] h-[80px] flex items-center">
-        <Link href={"/"} className="flex items-center gap-6 w-[187px]">
-          <Image
-            priority
-            src="/assets/tv.png"
-            alt="TV logo"
-            width={50}
-            height={50}
-          />
-          <h1 className="text-2xl font-bold leading-6 text-black">Flickerly</h1>
-        </Link>
-      </header>
-
       <section className="px-[98px] pt-6 pb-28">
         {trailer && (
           <div className="aspect-video w-full h-[449px] rounded-lg overflow-hidden shadow-lg">
@@ -91,6 +46,12 @@ export default async function MoviePage({ params }: MoviePageProps) {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
+          </div>
+        )}
+
+        {!trailer && (
+          <div className="aspect-video w-full h-[449px] rounded-lg shadow-lg flex items-center justify-center bg-black/20">
+            <p className="">No trailer available!</p>
           </div>
         )}
 
@@ -111,7 +72,9 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
           <div className="flex flex-wrap items-center gap-5">
             <h2 className="flex text-[14px] mb-4 text-black font-bold">
-              {new Date(movie.release_date).getFullYear()}
+              {movie.release_date
+                ? new Date(movie.release_date).getFullYear()
+                : "Undisclosed"}
             </h2>
             <span className="size-[5px] rounded-full bg-black translate-y-[-7px]"></span>
 
@@ -174,34 +137,38 @@ export default async function MoviePage({ params }: MoviePageProps) {
         <div className="mt-10">
           <p className="text-[17px] leading-relaxed text-gray-800 mb-4 dark:text-gray-400">
             <span className="font-bold">Production Countries:</span>{" "}
-            {movie.production_countries
-              ?.map((country) => country.name)
-              .join(", ")}
+            {movie.production_countries.length != 0
+              ? movie.production_countries
+                  ?.map((country) => country.name)
+                  .join(", ")
+              : "Undisclosed"}
           </p>
           <span className="font-bold">Production Companies:</span>
           <div className="flex flex-wrap gap-6 mt-2">
-            {movie.production_companies?.map((company) => (
-              <div
-                key={company.id}
-                className="flex flex-col items-center justify-start text-center w-[120px] "
-              >
-                <div className="mt-3">
-                  {company.logo_path ? (
-                    <Image
-                      src={`https://image.tmdb.org/t/p/original${company.logo_path}`}
-                      alt={company.name}
-                      width={100}
-                      height={60}
-                      className="object-contain mb-2"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center min-w-[120px] h-[70px] text-center bg-black text-white text-[12px] text-wrap font-bold rounded-[5px]">
-                      {company.name}
+            {movie.production_companies.length != 0
+              ? movie.production_companies.map((company) => (
+                  <div
+                    key={company.id}
+                    className="flex flex-col items-center justify-start text-center w-[120px] "
+                  >
+                    <div className="mt-3">
+                      {company.logo_path ? (
+                        <Image
+                          src={`https://image.tmdb.org/t/p/original${company.logo_path}`}
+                          alt={company.name}
+                          width={100}
+                          height={60}
+                          className="object-contain mb-2"
+                        />
+                      ) : (
+                        <div className="flex items-center justify-center min-w-[120px] h-[70px] text-center bg-black text-white text-[12px] text-wrap font-bold rounded-[5px]">
+                          {company.name}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
-            ))}
+                  </div>
+                ))
+              : "Undisclosed"}
           </div>
         </div>
       </section>

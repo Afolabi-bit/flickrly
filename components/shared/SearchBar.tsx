@@ -1,21 +1,9 @@
 "use client";
 
+import { Movie, SearchBarProps } from "@/app/types/otherTypes";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState, useRef } from "react";
-
-interface Movie {
-  id: number;
-  title: string;
-  release_date?: string;
-  poster_path?: string;
-  overview?: string;
-}
-
-interface SearchBarProps {
-  theme?: "light" | "dark";
-  onMovieSelect?: (movie: Movie) => void;
-}
 
 export default function SearchBar({
   theme = "dark",
@@ -103,7 +91,7 @@ export default function SearchBar({
     <div ref={dropdownRef} className="relative w-full max-w-[525px] fade-in">
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-full h-[36px] relative form fade-in"
+        className="w-full h-[36px] relative rounded-[6px] form fade-in"
       >
         <input
           name="search"
@@ -117,7 +105,7 @@ export default function SearchBar({
           className={`w-full h-full px-[10px]  py-[6px] pr-[36px] border rounded-[6px] transition-colors ${
             theme === "light"
               ? "outline-white placeholder:text-white/70 text-white border-white focus:border-white/80"
-              : "outline-black placeholder:text-black/50 text-black border-black focus:border-black/80"
+              : "outline-black placeholder:text-black/80 text-black border-black focus:border-black/80"
           } bg-transparent`}
           aria-controls="search-results"
         />

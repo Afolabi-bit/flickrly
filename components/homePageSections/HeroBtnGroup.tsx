@@ -1,9 +1,6 @@
 "use client";
 
-interface HeroBtnGroupProps {
-  movieSelector: number;
-  setMovieSelector: (index: number) => void;
-}
+import { HeroBtnGroupProps } from "@/app/types/otherTypes";
 
 const HeroBtnGroup: React.FC<HeroBtnGroupProps> = ({
   movieSelector,

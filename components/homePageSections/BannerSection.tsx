@@ -6,20 +6,7 @@ import { motion } from "framer-motion";
 import Hero from "@/components/homePageSections/Hero";
 import HeroBtnGroup from "@/components/homePageSections/HeroBtnGroup";
 import Header from "../shared/Header";
-import { TMDBMovie } from "@/app/types/tmdb";
-
-interface User {
-  id?: string;
-  given_name?: string | null;
-  family_name?: string | null;
-  email?: string | null;
-  picture?: string | null;
-}
-
-interface BannerSectionProps {
-  bannerMovies: TMDBMovie[];
-  user?: User | null;
-}
+import { BannerSectionProps } from "@/app/types/otherTypes";
 
 export default function BannerSection({
   bannerMovies,

@@ -4,20 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 
-import ClientAuthButton from "./ClientAuthButton";
-
-interface User {
-  id?: string;
-  given_name?: string | null;
-  family_name?: string | null;
-  email?: string | null;
-  picture?: string | null;
-}
-
-interface HeaderProps {
-  user?: User | null;
-  theme?: "light" | "dark";
-}
+import ClientLoginButton from "./ClientLogInButton";
+import { HeaderProps } from "@/app/types/otherTypes";
 
 export default function Header({ user, theme = "dark" }: HeaderProps) {
   return (
@@ -30,31 +18,31 @@ export default function Header({ user, theme = "dark" }: HeaderProps) {
           width={50}
           height={50}
         />
-        <h1
+        <h2
           className={`text-2xl font-bold leading-6 ${
             theme === "light" ? "text-white" : "text-black"
           }`}
         >
           Flickerly
-        </h1>
+        </h2>
       </Link>
 
       <SearchBar theme={theme} />
 
       <div>
         {user ? (
-          <Link href="/profile" className="flex gap-2 items-center">
+          <Link href="/profile" className="flex gap-2 items-center group">
             <Image
               src={user.picture ?? "/assets/user.png"}
               alt="user"
               width={40}
               height={40}
               priority
-              className="rounded-full shadow-2xl"
+              className="rounded-full shadow-2xl border-2 border-white/5 active:border-blue-600 transition-colors duration-200"
             />
           </Link>
         ) : (
-          <ClientAuthButton />
+          <ClientLoginButton />
         )}
       </div>
     </header>

@@ -1,13 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Rating from "../shared/Rating";
-
-interface HeroProps {
-  title: string;
-  overview: string;
-  rating: number;
-  id: number;
-}
+import { HeroProps } from "@/app/types/otherTypes";
 
 const Hero = ({ title, overview, rating, id }: HeroProps) => {
   return (

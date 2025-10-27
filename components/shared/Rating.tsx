@@ -1,8 +1,5 @@
+import { RatingProps } from "@/app/types/otherTypes";
 import { BadgeCheck } from "lucide-react";
-
-interface RatingProps {
-  rating: number; // expected 0.0 - 10.0, can be .5
-}
 
 /**
  * Bucket rules used:
