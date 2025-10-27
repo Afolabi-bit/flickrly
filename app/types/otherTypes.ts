@@ -63,7 +63,7 @@ export interface HeroBtnGroupProps {
 export interface MovieItem {
   id: number;
   title: string;
-  poster_path: string;
+  poster_path?: string | undefined;
   release_date: string;
   vote_average: number;
 }
@@ -85,12 +85,12 @@ export interface Movie {
   title: string;
   release_date: string;
   poster_path?: string;
-  overview?: string;
+  overview: string;
   vote_average: number;
 }
 
 export interface MovieCardProps {
-  movie: Movie;
+  movie: MovieItem;
 }
 
 export interface SearchBarProps {

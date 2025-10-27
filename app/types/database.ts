@@ -1,9 +1,9 @@
-import { TMDBMovie } from "./tmdb";
+import { Movie } from "./otherTypes";
 
 export interface Favorite {
   id: string;
   userId: string;
   movieId: string;
-  movie: TMDBMovie;
+  movie: Movie;
   createdAt: Date;
 }

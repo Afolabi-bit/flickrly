@@ -1,7 +1,5 @@
 import BannerSection from "@/components/homePageSections/BannerSection";
-import Image from "next/image";
 import Link from "next/link";
-import Rating from "@/components/shared/Rating";
 import getSessionUser from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Movie } from "./types/otherTypes";
