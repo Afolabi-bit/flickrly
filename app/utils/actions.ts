@@ -216,3 +216,33 @@ export async function trackMovieView(movie: {
 
   return { success: true };
 }
+
+export async function getUserHistory() {
+  try {
+    const user = await getSessionUser();
+
+    if (!user) {
+      return [];
+    }
+
+    const viewHistory = await prisma.viewHistory.findMany({
+      where: { userId: user.id },
+      include: {
+        movie: true,
+      },
+      orderBy: {
+        viewedAt: "desc",
+      },
+    });
+
+    return viewHistory.map((movie) => ({
+      id: movie.movie.id,
+      title: movie.movie.title,
+      poster_path: movie.movie.poster_path,
+      viewedAt: movie.viewedAt,
+    }));
+  } catch (error) {
+    console.error("Error fetching history:", error);
+    return [];
+  }
+}
