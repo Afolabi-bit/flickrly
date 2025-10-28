@@ -12,7 +12,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import LikeButton from "@/components/shared/LikeButton";
-import { div } from "framer-motion/client";
 
 const page = async () => {
   const user = await getSessionUser();

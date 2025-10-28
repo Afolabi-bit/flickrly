@@ -19,11 +19,13 @@ export interface MovieVideo {
 }
 
 export interface MovieDetailed {
+  id: number;
   title: string;
   release_date: string;
   status: string;
   runtime: number;
   tagline: string;
+  poster_path: string;
   overview: string;
   budget: number;
   revenue: number;

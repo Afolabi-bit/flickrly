@@ -1,4 +1,3 @@
-// app/utils/actions.ts
 "use server";
 
 import getSessionUser from "@/lib/auth";
@@ -167,4 +166,53 @@ export async function getUserFavoriteMovies() {
     console.error("Error fetching favorite movies:", error);
     return [];
   }
+}
+
+export async function trackMovieView(movie: {
+  id: string;
+  title: string;
+  poster_path: string;
+}) {
+  const user = await getSessionUser();
+  if (!user) return null;
+
+  // Ensure the movie exists in DB first (since you only store favorites & viewed)
+  await prisma.movie.upsert({
+    where: { id: movie.id },
+    update: {
+      title: movie.title,
+      poster_path: movie.poster_path,
+      updatedAt: new Date(),
+    },
+    create: {
+      id: movie.id,
+      title: movie.title,
+      poster_path: movie.poster_path,
+    },
+  });
+
+  await prisma.viewHistory.create({
+    data: {
+      userId: user.id,
+      movieId: movie.id,
+    },
+  });
+
+  // Keep only the 20 most recent records
+  const recentViews = await prisma.viewHistory.findMany({
+    where: { userId: user.id },
+    orderBy: { viewedAt: "desc" },
+    skip: 20, // skip the 20 newest
+  });
+
+  // Delete anything older than the 20 most recent
+  if (recentViews.length > 0) {
+    await prisma.viewHistory.deleteMany({
+      where: {
+        id: { in: recentViews.map((v) => v.id) },
+      },
+    });
+  }
+
+  return { success: true };
 }

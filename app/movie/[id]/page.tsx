@@ -3,6 +3,7 @@ import {
   MoviePageProps,
   MovieVideo,
 } from "@/app/types/otherTypes";
+import TrackMovieView from "@/components/moviePage/TrackMovieViews";
 import Rating from "@/components/shared/Rating";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -33,9 +34,16 @@ export default async function MoviePage({ params }: MoviePageProps) {
       vid.type === "Trailer" && (vid.site === "YouTube" || vid.site === "Vimeo")
   );
 
+  const tempMovie = {
+    id: movie.id.toString(),
+    title: movie.title,
+    poster_path: movie.poster_path,
+  };
+
   return (
     <main className="min-h-screen">
       <section className=" pt-6 pb-28">
+        <TrackMovieView movie={tempMovie} />
         {trailer && (
           <div className="aspect-video w-full h-[449px] rounded-lg overflow-hidden shadow-lg">
             <iframe
