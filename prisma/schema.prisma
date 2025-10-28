@@ -30,7 +30,7 @@ model User {
 model Movie {
   id           String     @id // Store TMDB ID as string
   title        String
-  posterPath   String?
+  poster_path   String?
   favorites    Favorite[]
   favCount     Int        @default(0) // Denormalized count for performance
   createdAt    DateTime   @default(now())

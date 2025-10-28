@@ -29,7 +29,7 @@ export async function syncUserToDatabase(user: KindeUser) {
 export async function toggleFavorite(movie: {
   id: string;
   title: string;
-  posterPath?: string;
+  poster_path?: string;
 }) {
   const user = await getSessionUser();
 
@@ -70,7 +70,7 @@ export async function toggleFavorite(movie: {
     create: {
       id: movie.id,
       title: movie.title,
-      posterPath: movie.posterPath,
+      poster_path: movie.poster_path,
       favCount: 1,
     },
     update: { favCount: { increment: 1 } },
@@ -87,7 +87,6 @@ export async function toggleFavorite(movie: {
   return { liked: true };
 }
 
-// NEW: Get all favorite movie IDs for the current user
 export async function getUserFavoriteIds(): Promise<string[]> {
   try {
     const user = await getSessionUser();
@@ -136,5 +135,36 @@ export async function checkFavorites(
   } catch (error) {
     console.error("Error checking favorites:", error);
     return {};
+  }
+}
+
+export async function getUserFavoriteMovies() {
+  try {
+    const user = await getSessionUser();
+
+    if (!user) {
+      return [];
+    }
+
+    const favorites = await prisma.favorite.findMany({
+      where: { userId: user.id },
+      include: {
+        movie: true,
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+
+    return favorites.map((fav) => ({
+      id: fav.movie.id,
+      title: fav.movie.title,
+      poster_path: fav.movie.poster_path,
+      favCount: fav.movie.favCount,
+      addedAt: fav.createdAt,
+    }));
+  } catch (error) {
+    console.error("Error fetching favorite movies:", error);
+    return [];
   }
 }

@@ -11,6 +11,12 @@ import { usePathname } from "next/navigation";
 const MovieCard = ({ movie }: MovieCardProps) => {
   const pathName = usePathname();
 
+  const tempMovie = {
+    id: movie.id.toString(),
+    title: movie.title,
+    poster_path: movie.poster_path,
+  };
+
   return (
     <div
       className={`relative ${
@@ -36,7 +42,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
 
       {/* Like Button positioned on top */}
       <div className="absolute top-2 right-2 z-10">
-        <LikeButton movie={movie} />
+        <LikeButton movie={tempMovie} />
       </div>
 
       <div className="px-2.5 pt-0.5 pb-2.5">

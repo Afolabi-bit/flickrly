@@ -7,9 +7,9 @@ import { useTransition } from "react";
 
 interface LikeButtonProps {
   movie: {
-    id: number;
+    id: string;
     title: string;
-    poster_path?: string;
+    poster_path: string | null;
   };
 }
 
@@ -21,7 +21,9 @@ const LikeButton = ({ movie }: LikeButtonProps) => {
   // Get initial state from context
   const liked = isFavorite(movieId);
 
-  const handleToggle = () => {
+  const handleToggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
     // Optimistic update
     if (liked) {
       removeFavorite(movieId);
@@ -34,7 +36,7 @@ const LikeButton = ({ movie }: LikeButtonProps) => {
         const res = await toggleFavorite({
           id: movieId,
           title: movie.title,
-          posterPath: movie.poster_path,
+          poster_path: movie.poster_path || undefined,
         });
 
         // If server response differs from optimistic update, correct it
@@ -83,7 +85,7 @@ const LikeButton = ({ movie }: LikeButtonProps) => {
 
   return (
     <button
-      onClick={handleToggle}
+      onClick={(e) => handleToggle(e)}
       disabled={isPending}
       className={`p-2 bg-white rounded-full shadow-md transition-all ${
         isPending ? "opacity-50 cursor-not-allowed" : "hover:scale-105"
