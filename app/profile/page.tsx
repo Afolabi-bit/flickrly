@@ -12,7 +12,7 @@ const page = async () => {
     <main>
       <section className="flex gap-20">
         <Image
-          src={user.picture}
+          src={user.picture || ""}
           alt={user.given_name}
           width={120}
           height={120}
