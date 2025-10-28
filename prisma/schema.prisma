@@ -20,6 +20,7 @@ model User {
   name          String?
   email         String?        @unique
   image         String?
+  viewHistory   ViewHistory[]
   favorites     Favorite[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
@@ -32,7 +33,8 @@ model Movie {
   title        String
   poster_path   String?
   favorites    Favorite[]
-  favCount     Int        @default(0) // Denormalized count for performance
+  viewHistory  ViewHistory[] 
+  favCount     Int        @default(0) 
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
 
@@ -52,4 +54,19 @@ model Favorite {
   @@index([userId])
   @@index([movieId])
   @@index([createdAt])
+}
+
+model ViewHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  movieId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie     Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  viewedAt  DateTime @default(now())
+  
+  // Track multiple views of the same movie
+  @@index([userId])
+  @@index([movieId])
+  @@index([viewedAt])
+  @@index([userId, viewedAt]) // For efficient "recently watched" queries
 }
