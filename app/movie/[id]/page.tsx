@@ -35,7 +35,7 @@ export default async function MoviePage({ params }: MoviePageProps) {
 
   return (
     <main className="min-h-screen">
-      <section className="px-[98px] pt-6 pb-28">
+      <section className=" pt-6 pb-28">
         {trailer && (
           <div className="aspect-video w-full h-[449px] rounded-lg overflow-hidden shadow-lg">
             <iframe

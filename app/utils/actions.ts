@@ -1,3 +1,4 @@
+// app/utils/actions.ts
 "use server";
 
 import getSessionUser from "@/lib/auth";
@@ -84,4 +85,56 @@ export async function toggleFavorite(movie: {
   });
 
   return { liked: true };
+}
+
+// NEW: Get all favorite movie IDs for the current user
+export async function getUserFavoriteIds(): Promise<string[]> {
+  try {
+    const user = await getSessionUser();
+
+    if (!user) {
+      return [];
+    }
+
+    const favorites = await prisma.favorite.findMany({
+      where: { userId: user.id },
+      select: { movieId: true },
+    });
+
+    return favorites.map((fav) => fav.movieId);
+  } catch (error) {
+    console.error("Error fetching user favorites:", error);
+    return [];
+  }
+}
+
+// NEW: Check if specific movies are favorited (batch check for efficiency)
+export async function checkFavorites(
+  movieIds: string[]
+): Promise<Record<string, boolean>> {
+  try {
+    const user = await getSessionUser();
+
+    if (!user || movieIds.length === 0) {
+      return {};
+    }
+
+    const favorites = await prisma.favorite.findMany({
+      where: {
+        userId: user.id,
+        movieId: { in: movieIds },
+      },
+      select: { movieId: true },
+    });
+
+    const favoriteMap: Record<string, boolean> = {};
+    favorites.forEach((fav) => {
+      favoriteMap[fav.movieId] = true;
+    });
+
+    return favoriteMap;
+  } catch (error) {
+    console.error("Error checking favorites:", error);
+    return {};
+  }
 }

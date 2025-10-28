@@ -6,6 +6,7 @@ import getSessionUser from "@/lib/auth";
 import { syncUserToDatabase } from "./utils/actions";
 import type { KindeUser } from "@kinde-oss/kinde-auth-nextjs/types";
 import Image from "next/image";
+import { FavoritesProvider } from "@/contexts/FavouritesContext";
 
 const openSans = Open_Sans({
   variable: "--font-open-sans",
@@ -32,7 +33,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`${openSans.variable} bg-[#eeeeee07] antialiased`}>
         <AuthProvider>
-          {children}
+          <FavoritesProvider>{children}</FavoritesProvider>
           <footer className=" border-t border-gray-800 bg-[#0d0d0d] text-gray-400 py-8">
             <div className="max-w-5xl mx-auto flex flex-col items-center gap-4 text-center">
               {/* Brand & Tagline */}
