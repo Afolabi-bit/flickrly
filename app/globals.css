@@ -52,6 +52,8 @@
   --color-myAccent: #00d1ff;
   --color-myAccentAlt: #7b61ff;
   --color-myBorder: #1f2937;
+
+  --breakpoint-2xl: 1445px;
 }
 
 @supports (-webkit-backdrop-filter: none) or (backdrop-filter: none) {

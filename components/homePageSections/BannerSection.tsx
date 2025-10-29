@@ -45,7 +45,7 @@ export default function BannerSection({
   };
 
   return (
-    <div className="relative w-full h-[600px] overflow-hidden">
+    <div className="relative w-full h-[600px] overflow-hidden 2xl:h-[800px]">
       {/* Background crossfade */}
       <div className="absolute top-0 left-0 w-full h-full -z-50">
         {bannerMovies.map((movie, index) => (

@@ -5,7 +5,7 @@ import { HeroProps } from "@/app/types/otherTypes";
 
 const Hero = ({ title, overview, rating, id }: HeroProps) => {
   return (
-    <div className="mt-[50px] w-[80%] lg:w-[404px] lg:h-[285px] lg:mt-[78px]">
+    <div className="mt-[50px] w-[80%] lg:w-[404px] lg:h-[285px] lg:mt-[78px] 2xl:mt-[220px]">
       <h1 className="text-[30px] leading-[40px] mb-2 md:text-[42px] md:mb-3 lg:text-[48px] lg:leading-[56px] font-bold lg:mb-4 text-white">
         {title}
       </h1>

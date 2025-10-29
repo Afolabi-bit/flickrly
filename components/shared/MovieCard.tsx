@@ -22,18 +22,17 @@ const MovieCard = ({ movie }: MovieCardProps) => {
       className={`relative ${
         pathName === "/" &&
         "shadow-md hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow duration-300"
-      } bg-white block max-w-[250px] h-[490px] rounded-sm`}
+      } bg-white block max-w-[220px] sm:max-w-[280px] lg:max-w-[300px] lg:pb-6 max-h-[490px] rounded-sm`}
     >
       <Link
         href={`/movie/${movie.id}`}
         style={{ userSelect: "none" }}
         className="block"
       >
-        <div className="overflow-hidden rounded-t-sm relative">
+        <div className="overflow-hidden w-full h-[200px] lg:h-[370px] rounded-t-sm relative">
           <Image
-            width={250}
-            height={370}
-            className="object-cover w-[250px] h-[370px] rounded-t-sm transform transition-transform duration-500 group-hover:scale-105"
+            fill
+            className="object-cover  rounded-t-sm transform transition-transform duration-500 group-hover:scale-105"
             src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
             alt={movie.title}
           />
@@ -45,10 +44,13 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         <LikeButton movie={tempMovie} />
       </div>
 
-      <div className="px-2.5 pt-0.5 pb-2.5">
-        <p>
-          <span className="text-[12px] font-bold mr-2">Release date:</span>
-          <span className="text-[12px] font-bold text-[#9CA3AF]">
+      <div className="px-2.5 pt-0.5 pb-3.5">
+        <p className="mb-4.5">
+          <span className="leading-0 text-[12px] font-bold mr-2">
+            Release date:
+          </span>
+          <br className="sm:hidden" />
+          <span className="leading-0 text-[12px] font-bold text-[#9CA3AF]">
             {new Date(movie.release_date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
@@ -56,7 +58,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             })}
           </span>
         </p>
-        <h2 className="text-[18px] font-bold text-[#111827] mb-1 truncate">
+        <h2 className="text-[16px] sm:text-[18px] font-bold text-[#111827] mb-1 truncate">
           {movie.title}
         </h2>
         <Rating rating={movie.vote_average} />

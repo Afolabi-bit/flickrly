@@ -30,17 +30,24 @@ export default async function Home() {
     <main className="mb-[70px]">
       <BannerSection bannerMovies={bannerMovies} user={user} />
 
-      <div className="px-[98px] pt-[70px]">
+      <div className="px-[20px] sm:px-10 lg:px-[98px] pt-[70px] 2xl:w-[1440px] 2xl:mx-auto">
         <div className="flex justify-between mb-[20px]">
-          <h2 className="text-4xl font-bold mb-5">Featured Movies</h2>
-          <Button asChild variant="default" className="rounded-md">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-5">
+            Featured Movies
+          </h2>
+          <Button
+            asChild
+            variant="default"
+            className="rounded-md px-[13px] py-[5px] text-[13px]  
+    sm:px-4.5 sm:py-1.5 sm:text-[14] "
+          >
             <Link href="/dashboard">
               See more <ChevronRight className="text-white" />
             </Link>
           </Button>
         </div>
 
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-[22px] ">
           {data.results.map((item) => (
             <MovieCard key={item.id} movie={item} />
           ))}
