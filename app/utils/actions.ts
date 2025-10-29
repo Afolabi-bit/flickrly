@@ -173,48 +173,66 @@ export async function trackMovieView(movie: {
   title: string;
   poster_path: string;
 }) {
-  const user = await getSessionUser();
-  if (!user) return null;
+  try {
+    const user = await getSessionUser();
+    if (!user) return { success: false, error: "Not authenticated" };
 
-  // Ensure the movie exists in DB first (since you only store favorites & viewed)
-  await prisma.movie.upsert({
-    where: { id: movie.id },
-    update: {
-      title: movie.title,
-      poster_path: movie.poster_path,
-      updatedAt: new Date(),
-    },
-    create: {
-      id: movie.id,
-      title: movie.title,
-      poster_path: movie.poster_path,
-    },
-  });
-
-  await prisma.viewHistory.create({
-    data: {
-      userId: user.id,
-      movieId: movie.id,
-    },
-  });
-
-  // Keep only the 20 most recent records
-  const recentViews = await prisma.viewHistory.findMany({
-    where: { userId: user.id },
-    orderBy: { viewedAt: "desc" },
-    skip: 20, // skip the 20 newest
-  });
-
-  // Delete anything older than the 20 most recent
-  if (recentViews.length > 0) {
-    await prisma.viewHistory.deleteMany({
-      where: {
-        id: { in: recentViews.map((v) => v.id) },
+    // Ensure the movie exists in DB
+    await prisma.movie.upsert({
+      where: { id: movie.id },
+      update: {
+        title: movie.title,
+        poster_path: movie.poster_path,
+        updatedAt: new Date(),
+      },
+      create: {
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
       },
     });
-  }
 
-  return { success: true };
+    // Delete existing view for this movie (if any)
+    await prisma.viewHistory.deleteMany({
+      where: {
+        userId: user.id,
+        movieId: movie.id,
+      },
+    });
+
+    // Create new view record with current timestamp
+    await prisma.viewHistory.create({
+      data: {
+        userId: user.id,
+        movieId: movie.id,
+      },
+    });
+
+    // Get all views for this user, ordered by most recent
+    const allViews = await prisma.viewHistory.findMany({
+      where: { userId: user.id },
+      orderBy: { viewedAt: "desc" },
+      select: { id: true },
+    });
+
+    // If more than 20, delete the excess (oldest ones)
+    if (allViews.length > 20) {
+      const viewsToDelete = allViews.slice(20);
+
+      await prisma.viewHistory.deleteMany({
+        where: {
+          id: {
+            in: viewsToDelete.map((v) => v.id),
+          },
+        },
+      });
+    }
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error tracking movie view:", error);
+    return { success: false, error: "Failed to track view" };
+  }
 }
 
 export async function getUserHistory() {

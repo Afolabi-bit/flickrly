@@ -7,3 +7,17 @@ export interface Favorite {
   movie: Movie;
   createdAt: Date;
 }
+export interface FavoriteFromDB {
+  id: string;
+  title: string;
+  poster_path: string | null;
+  favCount: number;
+  addedAt: Date;
+}
+
+export interface ViewHistoryItem {
+  id: string;
+  title: string;
+  poster_path: string | null;
+  viewedAt: Date | string;
+}

@@ -2,13 +2,16 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getUserFavoriteIds } from "@/app/utils/actions";
+import { getUserFavoriteIds, getUserFavoriteMovies } from "@/app/utils/actions";
+import { FavoriteFromDB } from "@/app/types/database";
 
 interface FavoritesContextType {
   favoriteIds: Set<string>;
+  favoriteMovies: FavoriteFromDB[];
   isFavorite: (movieId: string) => boolean;
   addFavorite: (movieId: string) => void;
   removeFavorite: (movieId: string) => void;
+  refreshFavorites: () => Promise<void>;
   loading: boolean;
 }
 
@@ -18,6 +21,7 @@ const FavoritesContext = createContext<FavoritesContextType | undefined>(
 
 export function FavoritesProvider({ children }: { children: React.ReactNode }) {
   const [favoriteIds, setFavoriteIds] = useState<Set<string>>(new Set());
+  const [favoriteMovies, setFavoriteMovies] = useState<FavoriteFromDB[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -26,12 +30,29 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
 
   const loadFavorites = async () => {
     try {
-      const ids = await getUserFavoriteIds();
+      const [ids, movies] = await Promise.all([
+        getUserFavoriteIds(),
+        getUserFavoriteMovies(),
+      ]);
       setFavoriteIds(new Set(ids));
+      setFavoriteMovies(movies);
     } catch (error) {
       console.error("Error loading favorites:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const refreshFavorites = async () => {
+    try {
+      const [ids, movies] = await Promise.all([
+        getUserFavoriteIds(),
+        getUserFavoriteMovies(),
+      ]);
+      setFavoriteIds(new Set(ids));
+      setFavoriteMovies(movies);
+    } catch (error) {
+      console.error("Error refreshing favorites:", error);
     }
   };
 
@@ -47,11 +68,20 @@ export function FavoritesProvider({ children }: { children: React.ReactNode }) {
       newSet.delete(movieId);
       return newSet;
     });
+    setFavoriteMovies((prev) => prev.filter((movie) => movie.id !== movieId));
   };
 
   return (
     <FavoritesContext.Provider
-      value={{ favoriteIds, isFavorite, addFavorite, removeFavorite, loading }}
+      value={{
+        favoriteIds,
+        favoriteMovies,
+        isFavorite,
+        addFavorite,
+        removeFavorite,
+        refreshFavorites,
+        loading,
+      }}
     >
       {children}
     </FavoritesContext.Provider>

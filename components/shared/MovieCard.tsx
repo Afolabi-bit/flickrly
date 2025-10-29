@@ -14,7 +14,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
   const tempMovie = {
     id: movie.id.toString(),
     title: movie.title,
-    poster_path: movie.poster_path,
+    poster_path: movie.poster_path || "",
   };
 
   return (
