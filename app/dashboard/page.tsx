@@ -1,6 +1,7 @@
 import MovieCategoriesSection from "@/components/dashBoardComponents/MovieCategoriesSection";
 import { buttonVariants } from "@/components/ui/button";
 import getSessionUser from "@/lib/auth";
+import { HeartPlus, History } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -19,11 +20,8 @@ const page = async () => {
       : "Good evening";
 
   const navItems = [
-    { name: "History", href: "/dashboard/history" },
-    { name: "Watch Later", href: "/dashboard/watch-later" },
-    { name: "Favourites", href: "/dashboard/favourites" },
-    { name: "My Reviews", href: "/dashboard/reviews" },
-    { name: "Recommended", href: "/dashboard/recommended" },
+    { name: "History", href: "/profile" },
+    { name: "Favourites", href: "/profile" },
   ];
 
   return (
@@ -47,7 +45,11 @@ const page = async () => {
             href={item.href}
             className={` text-sm md:text-base text-gray-400 hover:text-white transition-colors font-medium ${buttonVariants()}`}
           >
-            {item.name}
+            <p className="text-white">
+              {item.name === "History" ? <History /> : <HeartPlus />}
+            </p>
+
+            <p> {item.name}</p>
           </Link>
         ))}
       </nav>

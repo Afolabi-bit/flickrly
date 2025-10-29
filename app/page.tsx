@@ -4,6 +4,7 @@ import getSessionUser from "@/lib/auth";
 import { Button } from "@/components/ui/button";
 import { Movie } from "./types/otherTypes";
 import MovieCard from "@/components/shared/MovieCard";
+import { ChevronRight } from "lucide-react";
 
 export default async function Home() {
   // Fetch trending movies
@@ -33,7 +34,9 @@ export default async function Home() {
         <div className="flex justify-between mb-[20px]">
           <h2 className="text-4xl font-bold mb-5">Featured Movies</h2>
           <Button asChild variant="default" className="rounded-md">
-            <Link href="/dashboard">See more</Link>
+            <Link href="/dashboard">
+              See more <ChevronRight className="text-white" />
+            </Link>
           </Button>
         </div>
 

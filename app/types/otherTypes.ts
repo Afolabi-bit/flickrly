@@ -62,16 +62,8 @@ export interface HeroBtnGroupProps {
   setMovieSelector: (index: number) => void;
 }
 
-export interface MovieItem {
-  id: number;
-  title: string;
-  poster_path: string | null;
-  release_date: string;
-  vote_average: number;
-}
-
 export interface CarouselSetupProps {
-  list: MovieItem[];
+  list: Movie[];
 }
 export interface HeaderProps {
   user?: User | null;
@@ -92,7 +84,7 @@ export interface Movie {
 }
 
 export interface MovieCardProps {
-  movie: MovieItem;
+  movie: Movie;
 }
 
 export interface SearchBarProps {
