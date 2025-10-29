@@ -72,7 +72,7 @@ export default function BannerSection({
       <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent -z-40" />
 
       {/* Foreground content */}
-      <div className="relative z-10 px-[98px] flex flex-col">
+      <div className="px-[20px] sm:px-10 relative z-10 lg:px-[98px] 2xl:w-[1440px] 2xl:mx-auto flex flex-col">
         <Header user={user ?? null} theme="light" />
 
         <motion.div

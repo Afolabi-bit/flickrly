@@ -1,26 +1,7 @@
 import { RatingProps } from "@/app/types/otherTypes";
 import { BadgeCheck } from "lucide-react";
 
-/**
- * Bucket rules used:
- * 0.0 <= r < 1.0   -> bucket 0-1
- * 1.0 <= r < 2.0   -> bucket 1-2
- * 2.0 <= r < 3.0   -> bucket 2-3
- * 3.0 <= r < 4.0   -> bucket 3-4
- * 4.0 <= r < 5.0   -> bucket 4-5
- * 5.0 <= r < 5.5   -> bucket 5-5.5
- * 5.5 <= r < 6.0   -> bucket 5.5-6
- * 6.0 <= r < 6.5   -> bucket 6-6.5
- * 6.5 <= r < 7.0   -> bucket 6.5-7
- * 7.0 <= r < 7.5   -> bucket 7-7.5
- * 7.5 <= r < 8.0   -> bucket 7.5-8
- * 8.0 <= r < 8.5   -> bucket 8-8.5
- * 8.5 <= r < 9.0   -> bucket 8.5-9
- * 9.0 <= r < 9.5   -> bucket 9-9.5
- * 9.5 <= r <=10.0  -> bucket 9.5-10
- */
 const Rating = ({ rating }: RatingProps) => {
-  // clamp to 0..10 to avoid surprises
   const r = Math.max(0, Math.min(10, rating));
 
   let ratingColor = "text-gray-400";
@@ -90,12 +71,10 @@ const Rating = ({ rating }: RatingProps) => {
       : "bg-gradient-to-r from-red-500 to-amber-400";
 
   return (
-    <span
-      className={` text-[12px] leading-3 flex gap-1.5 items-center ${ratingColor}`}
-    >
-      <BadgeCheck strokeWidth={3} size={20} />
+    <span className={`flex gap-1.5 items-center ${ratingColor}`}>
+      <BadgeCheck strokeWidth={3} className="size-3.5 lg:size-5" />
       <span
-        className={`text-transparent bg-clip-text font-bold text-[14px] ${gradientClass}`}
+        className={`text-transparent bg-clip-text font-bold text-[12px] sm:text-[14px] ${gradientClass}`}
       >
         {r.toFixed(1)}
       </span>

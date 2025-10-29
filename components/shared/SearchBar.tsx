@@ -88,10 +88,13 @@ export default function SearchBar({
   };
 
   return (
-    <div ref={dropdownRef} className="relative w-full max-w-[525px] fade-in">
+    <div
+      ref={dropdownRef}
+      className="relative w-full sm:w-[280px] md:w-[350px] lg:w-[450px] fade-in"
+    >
       <form
         onSubmit={(e) => e.preventDefault()}
-        className="w-full h-[36px] relative rounded-[6px] form fade-in"
+        className="w-full  h-[36px] relative rounded-[6px] form fade-in"
       >
         <input
           name="search"
@@ -131,7 +134,7 @@ export default function SearchBar({
       {isOpen && query && (
         <div
           id="search-results"
-          className="absolute w-full mt-2 bg-white rounded-lg shadow-lg max-h-[400px] overflow-y-auto z-50 border border-gray-200"
+          className="absolute w-full sm:w-[calc(100%+70px)] sm:translate-x-[-35px] mt-2 bg-white rounded-lg shadow-lg max-h-[400px] overflow-y-auto z-[50] border border-gray-200"
           role="listbox"
         >
           {loading ? (
