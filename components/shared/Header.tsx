@@ -9,8 +9,8 @@ import { HeaderProps } from "@/app/types/otherTypes";
 
 export default function Header({ user, theme = "dark" }: HeaderProps) {
   return (
-    <header className="h-fit py-[30px] lg:h-[80px] w-full z-50 flex flex-col gap-5 justify-between items-center">
-      <div className="size-full flex justify-between items-center">
+    <header className="h-fit  pt-[30px] sm:h-[80px] w-full z-50 flex flex-col gap-5 sm:gap-0 justify-between items-start sm:items-center">
+      <div className="size-full  flex justify-between items-center">
         <Link href={"/"} className="gap-2.5 flex items-center lg:gap-6 ">
           <div className="relative size-[35px]  sm:size-10  md:w-12.5 md:h-12.5">
             <Image

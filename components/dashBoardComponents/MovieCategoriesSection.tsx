@@ -6,7 +6,7 @@ import UpcomingMoviesList from "./UpcomingMoviesList";
 
 export default function MovieCategoriesSection() {
   return (
-    <section className="pt-[70px] pb-[120px] flex flex-col gap-[80px] ">
+    <section className="pt-[40px] lg:pt-[70px] pb-[120px] flex flex-col gap-[80px] ">
       <TrendingMovies />
       <NowPlayingList />
       <PopularMoviesList />

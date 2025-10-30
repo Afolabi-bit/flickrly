@@ -25,14 +25,14 @@ const page = async () => {
   ];
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-10">
-      <div>
-        <h1 className="text-[42px] md:text-[50px] font-bold flex items-baseline gap-5">
+    <main className="py-0 lg:py-10">
+      <div className="flex-col flex items-center md:items-start">
+        <h1 className="text-wrap text-[25px] md:text-[40px] lg:text-[50px] font-bold">
           <span>
             {greeting}, {user.given_name}.
           </span>
         </h1>
-        <p className="text-lg md:text-2xl text-gray-900 pt-4">
+        <p className="text-[15px] sm:text-lg md:text-2xl text-gray-900 pt-4">
           Here’s what’s lighting up the screens this season. <br /> Find
           something new to fall in love with.
         </p>
