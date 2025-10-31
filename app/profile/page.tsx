@@ -44,20 +44,23 @@ const ProfilePage = () => {
   }
 
   return (
-    <main>
-      <section className="flex gap-20">
-        <Image
-          src={user.picture || ""}
-          alt={user.given_name || "User"}
-          width={120}
-          height={120}
-          className="rounded-full object-cover"
-        />
+    <>
+      <section className="flex gap-5 lg:gap-20">
+        <div className="relative w-[50px] h-[50px] sm:w-[70px] sm:h-[70px] lg:w-[120px] lg:h-[120px] rounded-full ">
+          <Image
+            src={user.picture || ""}
+            alt={user.given_name || "User"}
+            fill
+            className="rounded-full object-cover"
+          />
+        </div>
         <div className="gap-1.5 flex flex-col">
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-[15px] sm:text-[18px] md:text-2xl lg:text-4xl font-bold">
             {user.given_name} {user.family_name}
           </h1>
-          <p className="font-semibold text-black/60">{user.email}</p>
+          <p className="text-[12px] lg:text-base font-semibold text-black/60">
+            {user.email}
+          </p>
           <div>
             <ClientLogoutButton />
           </div>
@@ -65,7 +68,9 @@ const ProfilePage = () => {
       </section>
 
       <section className="mt-15">
-        <h2 className="text-2xl font-bold mb-4">Favorites</h2>
+        <h2 className="text-[16px] sm:text-xl lg:text-2xl font-bold mb-4">
+          Favorites
+        </h2>
         <div className="flex gap-3">
           {favLoading ? (
             <div
@@ -117,7 +122,7 @@ const ProfilePage = () => {
                 {favoriteMovies.map((movie) => (
                   <CarouselItem
                     key={movie.id}
-                    className="basis-[320px] flex-shrink-0 overflow-y-visible"
+                    className="basis-[200px] sm:basis-[260px] lg:basis-[320px] flex-shrink-0 overflow-y-visible"
                   >
                     <Link href={`/movie/${movie.id}`} className="relative">
                       <div className="absolute top-2 right-2 z-10">
@@ -130,16 +135,17 @@ const ProfilePage = () => {
                         />
                       </div>
                       <div className="overflow-hidden rounded-t-sm relative mb-3">
-                        <Image
-                          width={320}
-                          height={150}
-                          className="object-cover w-[320px] h-[150px] rounded-sm transform transition-transform duration-500 group-hover:scale-105"
-                          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                          alt={movie.title}
-                        />
+                        <div className="w-full h-[120px] sm:h-[150px] relative">
+                          <Image
+                            fill
+                            className="object-cover rounded-sm transform transition-transform duration-500 group-hover:scale-105"
+                            src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                            alt={movie.title}
+                          />
+                        </div>
                       </div>
                       <div>
-                        <h3 className="text-[20px] font-bold text-wrap truncate">
+                        <h3 className="text-[15px] sm:text-base lg:text-[20px] font-bold truncate">
                           {movie.title}
                         </h3>
                       </div>
@@ -147,15 +153,17 @@ const ProfilePage = () => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselNext />
-              <CarouselPrevious />
+              <CarouselNext className="hidden lg:inline-flex" />
+              <CarouselPrevious className="hidden lg:inline-flex" />
             </Carousel>
           )}
         </div>
       </section>
 
       <section className="mt-15">
-        <h2 className="text-2xl font-bold mb-4">History</h2>
+        <h2 className="text-[16px] sm:text-xl lg:text-2xl font-bold mb-4">
+          History
+        </h2>
         <div className="flex gap-3">
           {historyLoading ? (
             <div
@@ -206,21 +214,21 @@ const ProfilePage = () => {
                 {viewHistory.map((movie) => (
                   <CarouselItem
                     key={movie.id}
-                    className="basis-[320px] flex-shrink-0 overflow-y-visible"
+                    className="basis-[200px] sm:basis-[260px] lg:basis-[320px] flex-shrink-0 overflow-y-visible"
                   >
                     <Link href={`/movie/${movie.id}`} className="relative">
-                      <div className="absolute top-2 right-2 z-10"></div>
                       <div className="overflow-hidden rounded-t-sm relative mb-3">
-                        <Image
-                          width={320}
-                          height={150}
-                          className="object-cover w-[320px] h-[150px] rounded-sm transform transition-transform duration-500 group-hover:scale-105"
-                          src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
-                          alt={movie.title}
-                        />
+                        <div className="w-full h-[120px] sm:h-[150px] relative">
+                          <Image
+                            fill
+                            className="object-cover rounded-sm transform transition-transform duration-500 group-hover:scale-105"
+                            src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                            alt={movie.title}
+                          />
+                        </div>
                       </div>
                       <div>
-                        <h3 className="text-[20px] font-bold text-wrap truncate">
+                        <h3 className="text-[15px] sm:text-base lg:text-[20px] font-bold truncate">
                           {movie.title}
                         </h3>
                         <LastViewedTime date={movie.viewedAt} />
@@ -229,13 +237,13 @@ const ProfilePage = () => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselNext />
-              <CarouselPrevious />
+              <CarouselNext className="hidden lg:inline-flex" />
+              <CarouselPrevious className="hidden lg:inline-flex" />
             </Carousel>
           )}
         </div>
       </section>
-    </main>
+    </>
   );
 };
 
