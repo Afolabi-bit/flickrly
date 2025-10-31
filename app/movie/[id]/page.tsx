@@ -10,8 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function MoviePage({ params }: MoviePageProps) {
+  const { id } = await params;
   const res = await fetch(
-    `https://api.themoviedb.org/3/movie/${params.id}?language=en-US&append_to_response=videos`,
+    `https://api.themoviedb.org/3/movie/${id}?language=en-US&append_to_response=videos`,
     {
       headers: {
         accept: "application/json",

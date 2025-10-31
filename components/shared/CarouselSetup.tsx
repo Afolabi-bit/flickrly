@@ -11,19 +11,19 @@ import MovieCard from "./MovieCard";
 
 const CarouselSetup: React.FC<CarouselSetupProps> = ({ list }) => {
   return (
-    <Carousel className="bg-[#eee] p-9 shadow-2xl rounded-xl h-fit">
+    <Carousel className="bg-[#eee] lg:p-9 lg:shadow-2xl rounded-xl h-fit ">
       <CarouselContent className="flex flex-nowrap">
         {list.map((item) => (
           <CarouselItem
             key={item.id}
-            className="basis-[250px] flex-shrink-0  h- overflow-y-visible pb-3 "
+            className="basis-[200px] lg:basis-[250px] flex-shrink-0  h- overflow-y-visible pb-3 "
           >
             <MovieCard movie={item} />
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselNext />
-      <CarouselPrevious />
+      <CarouselNext className="hidden lg:inline-flex" />
+      <CarouselPrevious className="hidden lg:inline-flex" />
     </Carousel>
   );
 };

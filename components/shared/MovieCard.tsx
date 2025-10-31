@@ -7,6 +7,7 @@ import LikeButton from "./LikeButton";
 import Rating from "./Rating";
 import { MovieCardProps } from "@/app/types/otherTypes";
 import { usePathname } from "next/navigation";
+import ReleaseDate from "./ReleaseDate";
 
 const MovieCard = ({ movie }: MovieCardProps) => {
   const pathName = usePathname();
@@ -22,14 +23,14 @@ const MovieCard = ({ movie }: MovieCardProps) => {
       className={`relative ${
         pathName === "/" &&
         "shadow-md hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] transition-shadow duration-300"
-      } bg-white block max-w-[220px] sm:max-w-[280px] lg:max-w-[300px] lg:pb-6 max-h-[490px] rounded-sm`}
+      } bg-white block max-w-[220px] ps:max-w-[280px] sm:max-w-[320px] lg:max-w-[300px] lg:pb-6 h-[340px] lg:h-[380px] rounded-sm`}
     >
       <Link
         href={`/movie/${movie.id}`}
         style={{ userSelect: "none" }}
-        className="block"
+        className="block w-full"
       >
-        <div className="overflow-hidden w-full h-[200px] lg:h-[370px] rounded-t-sm relative">
+        <div className="overflow-hidden w-full h-[200px] lg:h-[250px] rounded-t-sm relative">
           <Image
             fill
             className="object-cover  rounded-t-sm transform transition-transform duration-500 group-hover:scale-105"
@@ -50,13 +51,7 @@ const MovieCard = ({ movie }: MovieCardProps) => {
             Release date:
           </span>
           <br className="sm:hidden" />
-          <span className="leading-0 text-[12px] font-bold text-[#9CA3AF]">
-            {new Date(movie.release_date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </span>
+          <ReleaseDate date={movie.release_date} />
         </p>
         <h2 className="text-[16px] sm:text-[18px] font-bold text-[#111827] mb-1 truncate">
           {movie.title}

@@ -30,8 +30,8 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body className={`${openSans.variable} bg-[#eeeeee07] antialiased`}>
+    <html className={openSans.className} lang="en">
+      <body className={` bg-[#eeeeee07] antialiased`}>
         <AuthProvider>
           <FavoritesProvider>{children}</FavoritesProvider>
           <footer className=" border-t border-gray-800 bg-[#0d0d0d] text-gray-400 py-8">

@@ -17,12 +17,12 @@ const TrendingMovies = async () => {
         <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold mb-5">
           Trending Today{" "}
         </h2>
-        <div className="relative size-[12px] sm:size-[12px] lg:size-[16px]">
+        <div className="relative size-[22px] sm:size-[25px] md:size-[30px] lg:size-[35px]">
           <Image
             src={"/assets/fire.png"}
             alt="trending"
             fill
-            className="object-cover translate-y-[-7px]"
+            className="object-fill translate-y-[-10px] sm:translate-y-[-12px]"
           />
         </div>
       </div>
