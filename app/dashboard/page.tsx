@@ -25,7 +25,7 @@ const page = async () => {
   ];
 
   return (
-    <main className="py-0 lg:py-10">
+    <div className="py-0 lg:py-10">
       <div className="flex-col flex items-center md:items-start">
         <h1 className="text-wrap text-[25px] md:text-[40px] lg:text-[50px] font-bold">
           <span>
@@ -55,7 +55,7 @@ const page = async () => {
       </nav>
 
       <MovieCategoriesSection />
-    </main>
+    </div>
   );
 };
 
